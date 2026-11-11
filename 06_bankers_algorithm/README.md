@@ -1,14 +1,15 @@
-# Practical 6: Deadlock Avoidance (Banker's Algorithm)
+# Practical 6: Banker's Algorithm (Deadlock Avoidance)
 
-## Description / वर्णन
-Determines if a multi-process resource allocation system is in a safe state and prints the safe execution sequence.
+Determines if a resource allocation state is safe and outputs a safe execution sequence.
 
-## How to Execute / Run (कसे चालवायचे):
+## Execution
 
 ```bash
 gcc bankers.c -o bankers
 ./bankers
 ```
 
-## Viva Questions & Key Concepts / तोंडी परीक्षेसाठी महत्त्वाचे मुद्दे:
-- **Need Matrix: Calculated as Need[i][j] = Max[i][j] - Allocation[i][j].**\n- **Safe State: A state where there exists at least one sequence of execution that allows all processes to finish without deadlock.**
+## Notes & Viva
+
+- Need Matrix: `Need[i][j] = Max[i][j] - Allocation[i][j]`
+- Safe State: A state in which at least one order of process execution exists where every process can complete without deadlock.

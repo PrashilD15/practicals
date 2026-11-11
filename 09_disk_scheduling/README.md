@@ -1,14 +1,16 @@
-# Practical 9: Disk Scheduling Algorithms (SSTF, SCAN, C-LOOK)
+# Practical 9: Disk Scheduling Algorithms
 
-## Description / वर्णन
-Implementation of Shortest Seek Time First (SSTF), SCAN (Elevator), and C-LOOK disk scheduling algorithms.
+Implementation of SSTF (Shortest Seek Time First), SCAN (Elevator), and C-LOOK disk scheduling algorithms.
 
-## How to Execute / Run (कसे चालवायचे):
+## Execution
 
 ```bash
 gcc disk_sched.c -o disk_sched
 ./disk_sched
 ```
 
-## Viva Questions & Key Concepts / तोंडी परीक्षेसाठी महत्त्वाचे मुद्दे:
-- **SSTF: Selects the request with the minimum seek time from the current head position (can cause starvation).**\n- **SCAN: Moves head toward one end servicing requests until reaching the end, then reverses direction (Elevator algorithm).**\n- **C-LOOK: Goes as far as the last request in one direction, then immediately jumps back to the furthest request in the opposite direction without going all the way to the disk edge.**
+## Notes & Viva
+
+- SSTF: Services the request closest to the current head position. Can lead to starvation.
+- SCAN: Moves the head towards one direction servicing requests until the end, then reverses direction.
+- C-LOOK: Services requests in one direction up to the last request, then jumps directly to the lowest request in the other direction.
