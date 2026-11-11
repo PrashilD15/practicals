@@ -1,0 +1,18 @@
+# Compiled binaries and object files
+*.o
+*.out
+fork_sort
+zombie_orphan
+prod_cons
+dining_philosophers
+bankers
+pipes_comm
+fifo_writer
+fifo_reader
+disk_sched
+
+# Temporary files
+temp.txt
+/tmp/myfifo
+.DS_Store
+*.zip
