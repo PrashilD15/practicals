@@ -2,6 +2,7 @@
 *.o
 *.out
 fork_sort
+simple_fork
 zombie_orphan
 prod_cons
 dining_philosophers
@@ -9,10 +10,18 @@ bankers
 pipes_comm
 fifo_writer
 fifo_reader
+client
+server
 disk_sched
+sstf
+scan
+clook
 
-# Temporary files
+# Temporary runtime files
 temp.txt
+addressbook.txt
+fifo6.txt
+fifo7.txt
 /tmp/myfifo
 .DS_Store
 *.zip

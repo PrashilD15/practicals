@@ -1,53 +1,115 @@
 #include <stdio.h>
 
 int main() {
-    int n = 5, m = 3;
-    int alloc[5][3] = { {0, 1, 0}, {2, 0, 0}, {3, 0, 2}, {2, 1, 1}, {0, 0, 2} };
-    int max[5][3] = { {7, 5, 3}, {3, 2, 2}, {9, 0, 2}, {2, 2, 2}, {4, 3, 3} };
-    int avail[3] = { 3, 3, 2 };
+    int n, m;
 
-    int f[5], ans[5], ind = 0;
-    for (int k = 0; k < n; k++) f[k] = 0;
+    printf("Enter number of processes: ");
+    if (scanf("%d", &n) != 1 || n <= 0) return 1;
 
-    int need[5][3];
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < m; j++)
-            need[i][j] = max[i][j] - alloc[i][j];
+    printf("Enter number of resources: ");
+    if (scanf("%d", &m) != 1 || m <= 0) return 1;
 
-    for (int k = 0; k < 5; k++) {
-        for (int i = 0; i < n; i++) {
-            if (f[i] == 0) {
-                int flag = 0;
-                for (int j = 0; j < m; j++) {
-                    if (need[i][j] > avail[j]) {
-                        flag = 1;
-                        break;
-                    }
-                }
-                if (flag == 0) {
-                    ans[ind++] = i;
-                    for (int y = 0; y < m; y++)
-                        avail[y] += alloc[i][y];
-                    f[i] = 1;
-                }
-            }
+    int allocation[n][m];
+    int max[n][m];
+    int need[n][m];
+    int available[m];
+    int work[m];
+    int finish[n];
+
+    // Input Allocation Matrix
+    printf("\nEnter Allocation Matrix:\n");
+    for (int i = 0; i < n; i++) {
+        printf("Process P%d: ", i);
+        for (int j = 0; j < m; j++) {
+            scanf("%d", &allocation[i][j]);
         }
     }
 
-    int safe = 1;
+    // Input Maximum Matrix
+    printf("\nEnter Maximum Matrix:\n");
     for (int i = 0; i < n; i++) {
-        if (f[i] == 0) {
-            safe = 0;
+        printf("Process P%d: ", i);
+        for (int j = 0; j < m; j++) {
+            scanf("%d", &max[i][j]);
+        }
+    }
+
+    // Input Available Resources
+    printf("\nEnter Available Resources:\n");
+    for (int j = 0; j < m; j++) {
+        scanf("%d", &available[j]);
+        work[j] = available[j];
+    }
+
+    // Calculate Need Matrix
+    for (int i = 0; i < n; i++) {
+        finish[i] = 0;
+        for (int j = 0; j < m; j++) {
+            need[i][j] = max[i][j] - allocation[i][j];
+        }
+    }
+
+    // Display Need Matrix
+    printf("\nNeed Matrix:\n");
+    for (int i = 0; i < n; i++) {
+        printf("P%d: ", i);
+        for (int j = 0; j < m; j++) {
+            printf("%d ", need[i][j]);
+        }
+        printf("\n");
+    }
+
+    // Banker's Algorithm
+    int count = 0;
+    int safeSequence[n];
+
+    while (count < n) {
+        int found = 0;
+        for (int i = 0; i < n; i++) {
+            if (finish[i] == 0) {
+                int possible = 1;
+
+                // Check if Need <= Work
+                for (int j = 0; j < m; j++) {
+                    if (need[i][j] > work[j]) {
+                        possible = 0;
+                        break;
+                    }
+                }
+
+                if (possible) {
+                    // Process can execute
+                    for (int j = 0; j < m; j++) {
+                        work[j] += allocation[i][j];
+                    }
+                    safeSequence[count] = i;
+                    finish[i] = 1;
+                    count++;
+                    found = 1;
+                }
+            }
+        }
+
+        // No process can proceed
+        if (found == 0) {
             break;
         }
     }
 
-    if (safe == 1) {
-        printf("System is SAFE. Safe Sequence:\n");
-        for (int i = 0; i < n - 1; i++) printf("P%d -> ", ans[i]);
-        printf("P%d\n", ans[n - 1]);
+    // Check whether system is safe
+    if (count == n) {
+        printf("\nSystem is in a SAFE state.\n");
+        printf("Safe Sequence: ");
+        for (int i = 0; i < n; i++) {
+            printf("P%d", safeSequence[i]);
+            if (i != n - 1)
+                printf(" -> ");
+        }
+        printf("\n");
     } else {
-        printf("System is UNSAFE!\n");
+        printf("\nSystem is in an UNSAFE state.\n");
+        printf("Deadlock may occur.\n");
     }
+
     return 0;
 }

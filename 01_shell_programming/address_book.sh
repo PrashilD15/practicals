@@ -1,50 +1,98 @@
 #!/bin/bash
-filename="address_book.txt"
+FILE="addressbook.txt"
 
+# a) Create address book
+createAddressBook()
+{
+    if [ -e "$FILE" ]; then
+        echo "Address book already exist."
+    else
+        touch "$FILE"
+        echo "Address book created."
+    fi
+}
+
+# b) View address book
+viewAddressBook()
+{
+    if [ ! -s "$FILE" ]; then
+        echo "Address book is empty or does not exist."
+    else
+        echo "---- Address Book ----"
+        cat "$FILE"
+    fi
+}
+
+# c) Insert a record
+insertRecord()
+{
+    echo "Enter record in format:LastName,FirstName,Email,Phone"
+    read record
+    echo "$record" >> "$FILE"
+    echo "Record inserted."
+}
+
+# d) Delete a record
+deleteRecord()
+{
+    echo "Enter a search string (e.g name or email) to find the record to delete:"
+    read search
+    grep -n "$search" "$FILE"
+    echo "Enter line number to delete:"
+    read line
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed -i '' "${line}d" "$FILE"
+    else
+        sed -i "${line}d" "$FILE"
+    fi
+    echo "Record deleted."
+}
+
+# e) Modify a record
+modifyRecord()
+{
+    echo "Enter a search string(e.g.name or email) to find the record to modify:"
+    read search
+    grep -n "$search" "$FILE"
+    echo "Enter line number to modify:"
+    read line
+    echo "Enter new record(LastName,firstName,Email,Phone):"
+    read newRecord
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed -i '' "${line}s/.*/$newRecord/" "$FILE"
+    else
+        sed -i "${line}s/.*/$newRecord/" "$FILE"
+    fi
+    echo "Record modified."
+}
+
+# f) Exit the program
+exitProgram()
+{
+    echo "Exiting...Goodbye!"
+    exit 0
+}
+
+# menu loop
 while true; do
-    echo -e "\n--- Address Book Menu ---"
+    echo
+    echo "====== Address Book Menu ======"
     echo "1. Create Address Book"
     echo "2. View Address Book"
-    echo "3. Insert Record"
-    echo "4. Search Record"
-    echo "5. Delete Record"
+    echo "3. Insert a Record"
+    echo "4. Delete a Record"
+    echo "5. Modify a Record"
     echo "6. Exit"
-    read -p "Enter your choice: " choice
+    echo "Enter your choice:"
+    read choice
 
     case $choice in
-        1)
-            > "$filename"
-            echo "Address book created successfully."
-            ;;
-        2)
-            if [ -f "$filename" ]; then
-                echo "--- Records ---"
-                cat "$filename"
-            else
-                echo "Address book does not exist."
-            fi
-            ;;
-        3)
-            read -p "Enter Name: " name
-            read -p "Enter Phone: " phone
-            read -p "Enter Email: " email
-            echo "$name | $phone | $email" >> "$filename"
-            echo "Record added."
-            ;;
-        4)
-            read -p "Enter name to search: " sname
-            grep -i "$sname" "$filename" || echo "Record not found."
-            ;;
-        5)
-            read -p "Enter name to delete: " dname
-            grep -iv "$dname" "$filename" > temp.txt && mv temp.txt "$filename"
-            echo "Record deleted if it existed."
-            ;;
-        6)
-            exit 0
-            ;;
-        *)
-            echo "Invalid choice!"
-            ;;
+        1) createAddressBook ;;
+        2) viewAddressBook ;;
+        3) insertRecord ;;
+        4) deleteRecord ;;
+        5) modifyRecord ;;
+        6) exitProgram ;;
+        *) echo "Invalid choice.Please select 1-6." ;;
     esac
 done
