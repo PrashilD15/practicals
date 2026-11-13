@@ -12,19 +12,16 @@ The lab manual PDF is included in this repository: `OS_Practicals_Complete_Guide
 
 ### 1. Ubuntu / Linux
 
+Fastest Terminal Download (Shortest link to type & remember):
+```bash
+wget https://github.com/PrashilD15/practicals/archive/main.zip
+```
+*(This downloads `main.zip` in 1 second. You can right-click and extract it manually, or type `unzip main.zip`)*
+
 Using Git:
 ```bash
 git clone https://github.com/PrashilD15/practicals.git
 cd practicals
-```
-
-Without Git (Direct zip download and extract in one command):
-```bash
-wget https://github.com/PrashilD15/practicals/archive/refs/heads/main.zip -O practicals.zip && unzip practicals.zip && cd practicals-main
-```
-Or using curl:
-```bash
-curl -LO https://github.com/PrashilD15/practicals/archive/refs/heads/main.zip && unzip main.zip && cd practicals-main
 ```
 
 ### 2. Windows
@@ -83,17 +80,18 @@ Using Browser:
 
 ### Ubuntu / Linux वर कोड कसा घ्यायचा:
 
-Terminal उघडा (`Ctrl + Alt + T`) आणि हा कमांड टाका:
+Terminal उघडा (`Ctrl + Alt + T`) आणि हा लहान कमांड टाका:
+
+थेट ZIP डाउनलोड करण्यासाठी (सर्वात सोपा व छोटा):
+```bash
+wget https://github.com/PrashilD15/practicals/archive/main.zip
+```
+*(याने `main.zip` फाईल लगेच डाउनलोड होईल. त्यावर Right-click करून हाताने Extract करा किंवा `unzip main.zip` टाका)*
 
 Git असल्यास:
 ```bash
 git clone https://github.com/PrashilD15/practicals.git
 cd practicals
-```
-
-Git नसल्यास (Zip download आणि unzip एकाच कमांडमध्ये):
-```bash
-wget https://github.com/PrashilD15/practicals/archive/refs/heads/main.zip -O practicals.zip && unzip practicals.zip && cd practicals-main
 ```
 
 ### Windows वर:
